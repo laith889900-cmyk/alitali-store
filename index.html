@@ -1,39 +1,368 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>الإيطالي - فرع الشطرة</title>
 
 <style>
-
-*{
-
-box-sizing:border-box;
-
-margin:0;
-
-padding:0;
-
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-
 font-family:Arial,Tahoma,sans-serif;
-
 background:#f7f7f9;
-
 color:#202536;
+padding-bottom:90px
+}
+header{
+background:#72005a;
+color:white;
+padding:22px 18px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:10
+}
+header h1{font-size:25px}
+header p{margin-top:7px;font-size:14px;opacity:.9}
 
-padding-bottom:90px;
+.container{padding:18px}
+h2{margin:10px 0 16px}
 
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding-bottom:12px
+}
+.categories button{
+border:0;
+background:white;
+padding:10px 17px;
+border-radius:22px;
+white-space:nowrap;
+box-shadow:0 2px 8px #ddd;
+color:#72005a
 }
 
-header{
-
+.products{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px
+}
+.product{
+background:white;
+border-radius:16px;
+padding:12px;
+box-shadow:0 3px 12px #ddd
+}
+.product .pic{
+height:120px;
+background:#f1e6ef;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:55px;
+margin-bottom:10px
+}
+.product h3{font-size:16px;margin-bottom:7px}
+.price{
+font-weight:bold;
+color:#72005a;
+margin-bottom:10px
+}
+.product button{
+width:100%;
+border:0;
 background:#72005a;
+color:white;
+padding:10px;
+border-radius:10px;
+font-size:14px
+}
+
+.cart{
+position:fixed;
+bottom:15px;
+left:15px;
+right:15px;
+background:#72005a;
+color:white;
+padding:15px;
+border-radius:18px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:20;
+box-shadow:0 5px 20px #999
+}
+.cart button{
+border:0;
+background:white;
+color:#72005a;
+padding:9px 14px;
+border-radius:10px;
+font-weight:bold
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:50;
+align-items:flex-end
+}
+.modal-box{
+background:white;
+width:100%;
+max-height:80vh;
+overflow:auto;
+border-radius:22px 22px 0 0;
+padding:20px
+}
+.modal-box h2{color:#72005a}
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid #eee
+}
+.qty button{
+border:0;
+background:#eee;
+width:30px;
+height:30px;
+border-radius:8px
+}
+.total{
+font-size:20px;
+font-weight:bold;
+margin:18px 0;
+color:#72005a
+}
+.order{
+width:100%;
+border:0;
+background:#25D366;
+color:white;
+padding:14px;
+border-radius:12px;
+font-size:17px;
+font-weight:bold
+}
+.close{
+width:100%;
+border:0;
+background:#eee;
+padding:12px;
+border-radius:12px;
+margin-top:8px
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🍨 الإيطالي</h1>
+<p>فرع الشطرة</p>
+</header>
+
+<div class="container">
+
+<h2>الأصناف</h2>
+
+<div class="categories">
+<button onclick="showAll()">الكل</button>
+<button>🍦 آيس كريم</button>
+<button>🍰 حلويات</button>
+<button>🥤 عصاير</button>
+</div>
+
+<div class="products">
+
+<div class="product">
+<div class="pic">🍦</div>
+<h3>آيس كريم</h3>
+<div class="price">3000 د.ع</div>
+<button onclick="add('آيس كريم',3000)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<div class="pic">🍨</div>
+<h3>كأس آيس كريم</h3>
+<div class="price">4000 د.ع</div>
+<button onclick="add('كأس آيس كريم',4000)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<div class="pic">🍰</div>
+<h3>كيك إيطالي</h3>
+<div class="price">5000 د.ع</div>
+<button onclick="add('كيك إيطالي',5000)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<div class="pic">🍮</div>
+<h3>حلا إيطالي</h3>
+<div class="price">4000 د.ع</div>
+<button onclick="add('حلا إيطالي',4000)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<div class="pic">🥤</div>
+<h3>عصير طبيعي</h3>
+<div class="price">3000 د.ع</div>
+<button onclick="add('عصير طبيعي',3000)">أضف للسلة</button>
+</div>
+
+<div class="product">
+<div class="pic">🧃</div>
+<h3>كوكتيل</h3>
+<div class="price">5000 د.ع</div>
+<button onclick="add('كوكتيل',5000)">أضف للسلة</button>
+</div>
+
+</div>
+</div>
+
+<div class="cart">
+<span>🛒 السلة: <b id="count">0</b> | <b id="total">0</b> د.ع</span>
+<button onclick="openCart()">فتح السلة</button>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<h2>🛒 سلة الطلب</h2>
+
+<div id="items"></div>
+
+<div class="total">
+المجموع: <span id="modalTotal">0</span> د.ع
+</div>
+
+<button class="order" onclick="sendOrder()">
+📱 إرسال الطلب عبر واتساب
+</button>
+
+<button class="close" onclick="closeCart()">إغلاق</button>
+</div>
+</div>
+
+<script>
+let cart=[];
+
+function add(name,price){
+let item=cart.find(x=>x.name===name);
+
+if(item){
+item.qty++;
+}else{
+cart.push({name:name,price:price,qty:1});
+}
+
+update();
+}
+
+function update(){
+let count=0;
+let total=0;
+
+cart.forEach(x=>{
+count+=x.qty;
+total+=x.price*x.qty;
+});
+
+document.getElementById("count").innerText=count;
+document.getElementById("total").innerText=total;
+document.getElementById("modalTotal").innerText=total;
+}
+
+function openCart(){
+render();
+document.getElementById("modal").style.display="flex";
+}
+
+function closeCart(){
+document.getElementById("modal").style.display="none";
+}
+
+function render(){
+let box=document.getElementById("items");
+box.innerHTML="";
+
+if(cart.length===0){
+box.innerHTML="<p style='padding:20px;text-align:center'>السلة فارغة</p>";
+return;
+}
+
+cart.forEach((x,i)=>{
+box.innerHTML+=`
+<div class="item">
+<div>
+<b>${x.name}</b><br>
+${x.price.toLocaleString()} د.ع
+</div>
+<div class="qty">
+<button onclick="minus(${i})">−</button>
+<span style="padding:8px">${x.qty}</span>
+<button onclick="plus(${i})">+</button>
+</div>
+</div>
+`;
+});
+}
+
+function plus(i){
+cart[i].qty++;
+update();
+render();
+}
+
+function minus(i){
+cart[i].qty--;
+
+if(cart[i].qty<=0){
+cart.splice(i,1);
+}
+
+update();
+render();
+}
+
+function sendOrder(){
+
+if(cart.length===0){
+alert("السلة فارغة");
+return;
+}
+
+let message="طلب جديد من الإيطالي - فرع الشطرة%0A%0A";
+
+cart.forEach(x=>{
+message+=`${x.name} × ${x.qty} = ${(x.price*x.qty).toLocaleString()} د.ع%0A`;
+});
+
+let total=cart.reduce((sum,x)=>sum+(x.price*x.qty),0);
+
+message+=`%0Aالمجموع: ${total.toLocaleString()} د.ع`;
+
+let phone="9647852693335";
+
+window.open(
+"https://wa.me/"+phone+"?text="+message,
+"_blank"
+);
+}
+
+function showAll(){
+document.querySelectorAll(".product").forEach(x=>{
+x.style.display="block";
+});
+}
+</script>
+
+</body>
+</html>
