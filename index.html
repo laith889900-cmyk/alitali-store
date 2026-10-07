@@ -364,5 +364,140 @@ x.style.display="block";
 }
 </script>
 
-</body>
+</body><script>
+function showCustomerForm(){
+
+let old=document.getElementById("customerForm");
+if(old) old.remove();
+
+let box=document.createElement("div");
+
+box.id="customerForm";
+
+box.style.cssText=`
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+z-index:99999;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+`;
+
+box.innerHTML=`
+<div style="
+background:white;
+width:100%;
+max-width:500px;
+border-radius:25px;
+padding:25px;
+direction:rtl;
+font-family:Arial;
+">
+
+<h2 style="text-align:center;color:#72005a">
+📋 بيانات الطلب
+</h2>
+
+<input id="customerName"
+placeholder="الاسم الكامل"
+style="width:100%;padding:16px;margin:8px 0;border:1px solid #ddd;border-radius:15px;font-size:16px">
+
+<input id="customerPhone"
+placeholder="رقم الهاتف"
+type="tel"
+style="width:100%;padding:16px;margin:8px 0;border:1px solid #ddd;border-radius:15px;font-size:16px">
+
+<input id="customerAddress"
+placeholder="العنوان بالتفصيل"
+style="width:100%;padding:16px;margin:8px 0;border:1px solid #ddd;border-radius:15px;font-size:16px">
+
+<button onclick="confirmCustomerOrder()"
+style="
+width:100%;
+padding:16px;
+margin-top:12px;
+border:0;
+border-radius:15px;
+background:#72005a;
+color:white;
+font-size:18px;
+">
+إرسال الطلب 📱
+</button>
+
+<button onclick="document.getElementById('customerForm').remove()"
+style="
+width:100%;
+padding:12px;
+margin-top:8px;
+border:0;
+background:#eee;
+border-radius:15px;
+font-size:16px;
+">
+إلغاء
+</button>
+
+</div>
+`;
+
+document.body.appendChild(box);
+}
+
+function confirmCustomerOrder(){
+
+let name=document.getElementById("customerName").value.trim();
+let phone=document.getElementById("customerPhone").value.trim();
+let address=document.getElementById("customerAddress").value.trim();
+
+if(!name || !phone || !address){
+alert("يرجى إدخال الاسم ورقم الهاتف والعنوان");
+return;
+}
+
+let message="طلب جديد من الإيطالي - فرع الشطرة\n\n";
+
+message+="👤 الاسم: "+name+"\n";
+message+="📞 الهاتف: "+phone+"\n";
+message+="📍 العنوان: "+address+"\n\n";
+
+message+="🛒 الطلب:\n";
+
+cart.forEach(x=>{
+message+=x.name+" × "+x.qty+" = "+(x.price*x.qty).toLocaleString()+" د.ع\n";
+});
+
+let total=cart.reduce((sum,x)=>sum+(x.price*x.qty),0);
+
+message+="\n💰 المجموع: "+total.toLocaleString()+" د.ع";
+
+let shopPhone="9647852693335";
+
+window.open(
+"https://wa.me/"+shopPhone+"?text="+encodeURIComponent(message),
+"_blank"
+);
+}
+
+function add(name,price){
+
+let item=cart.find(x=>x.name===name);
+
+if(item){
+item.qty++;
+}else{
+cart.push({
+name:name,
+price:price,
+qty:1
+});
+}
+
+update();
+
+showCustomerForm();
+}
+</script>
 </html>
