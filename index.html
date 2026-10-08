@@ -176,49 +176,50 @@ margin-top:8px
 
 <div class="categories">
 <button onclick="showAll()">الكل</button>
-<button>🍦 آيس كريم</button>
+<button onclick="showCategory('ice')">🍦 آيس كريم</button>
 <button>🍰 حلويات</button>
-<button>🥤 عصاير</button>
+<button>🥤 مشروبات</button>
+<button>🎂 كيك</button>
 </div>
 
 <div class="products">
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🍦</div>
 <h3>آيس كريم</h3>
 <div class="price">3000 د.ع</div>
 <button onclick="add('آيس كريم',3000)">أضف للسلة</button>
 </div>
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🍨</div>
 <h3>كأس آيس كريم</h3>
 <div class="price">4000 د.ع</div>
 <button onclick="add('كأس آيس كريم',4000)">أضف للسلة</button>
 </div>
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🍰</div>
 <h3>كيك إيطالي</h3>
 <div class="price">5000 د.ع</div>
 <button onclick="add('كيك إيطالي',5000)">أضف للسلة</button>
 </div>
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🍮</div>
 <h3>حلا إيطالي</h3>
 <div class="price">4000 د.ع</div>
 <button onclick="add('حلا إيطالي',4000)">أضف للسلة</button>
 </div>
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🥤</div>
 <h3>عصير طبيعي</h3>
 <div class="price">3000 د.ع</div>
 <button onclick="add('عصير طبيعي',3000)">أضف للسلة</button>
 </div>
 
-<div class="product">
+<div class="product" data-category="ice">
 <div class="pic">🧃</div>
 <h3>كوكتيل</h3>
 <div class="price">5000 د.ع</div>
@@ -357,7 +358,15 @@ window.open(
 "_blank"
 );
 }
-
+function showCategory(category){
+  document.querySelectorAll(".product").forEach(x=>{
+    if(category==="all" || x.dataset.category===category){
+      x.style.display="block";
+    }else{
+      x.style.display="none";
+    }
+  });
+}
 function showAll(){
 document.querySelectorAll(".product").forEach(x=>{
 x.style.display="block";
